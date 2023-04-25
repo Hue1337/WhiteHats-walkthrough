@@ -1,4 +1,4 @@
-# [White Hats](https://whitehats.pwr.edu.pl/)- kurs pentestera semestr letni 2023
+# [White Hats](https://whitehats.pwr.edu.pl/)- walkthrough
 <p align="center">
 <img src="https://raw.githubusercontent.com/Hue1337/WhiteHats-walkthrough/main/pics/wh.png" width=250 height=auto/>
 </p>
