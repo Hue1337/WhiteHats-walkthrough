@@ -1,6 +1,6 @@
 # [White Hats](https://whitehats.pwr.edu.pl/)- kurs pentestera semestr letni 2023
 <p align="center">
-<img src="https://whitehats.pwr.edu.pl/assets/images/logo.png" width=250 height=auto/>
+<img src="https://raw.githubusercontent.com/Hue1337/WhiteHats-walkthrough/main/pics/wh.png" width=250 height=auto/>
 </p>
 
 ## FI- File Inclusion (LFI & RFI)
