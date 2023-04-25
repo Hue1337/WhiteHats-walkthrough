@@ -5,16 +5,16 @@
 # Local File Inclusion- DVWA
 
 ## Jak połączyć się z DVWA?
-1) Wpisujemy w przeglądarce link: http://192.168.13.198/DVWA/vulnerabilities/fi/?file=include.php.
-2) Upewniamy się, że poziom trudności jest ustawiony na `LOW`:
+1. Wpisujemy w przeglądarce link: http://192.168.13.198/DVWA/vulnerabilities/fi/?file=include.php.
+2. Upewniamy się, że poziom trudności jest ustawiony na `LOW`:
 
     <img src="pics/LFI3.png">
 
-3) Jeżeli poziom trudności jest inny to zmieniamy go w zakładce `DVWA Security`:
+3. Jeżeli poziom trudności jest inny to zmieniamy go w zakładce `DVWA Security`:
 
     <img src="pics/LFI4.png">
 
-4) Na koniec przechodzimy do zakładki `File Inclusion`:
+4. Na koniec przechodzimy do zakładki `File Inclusion`:
 
     <img src="pics/LFI5.png">
 
@@ -38,11 +38,11 @@
 
 - Na poziomie **LOW** praktycznie nie ma zabezpieczeń, w związku z czym od razu możemy przejść do zabwy:
 
-    1) Zmieniamy wartość parametru w URL z `index.php` w celu zobaczenia zachowania maszyny (zobaczanie potncjalnych informacji o błędzie np.: `... include(var/www/html/DVWA/.../file.txt) ... not found`):
+    1. Zmieniamy wartość parametru w URL z `index.php` w celu zobaczenia zachowania maszyny (zobaczanie potncjalnych informacji o błędzie np.: `... include(var/www/html/DVWA/.../file.txt) ... not found`):
         ```
         http://192.168.X.X/DVWA/vulnerablity/fi/?page=file.txt
         ```
-    2) Niestety aplikacja nie podaje informacji zwrotnych, w związku z czym albo korzystamy z wiedzy własnej, albo pytamy o pomoc **WUJKA GOOGLE**. Serwisy postawione na systemów z rodziny UNIX najczęściej mają kody źródłowe umieszczone w folderze `var/www/html/`. W związku z czym analizujemy na czym stoimy:
+    2. Niestety aplikacja nie podaje informacji zwrotnych, w związku z czym albo korzystamy z wiedzy własnej, albo pytamy o pomoc **WUJKA GOOGLE**. Serwisy postawione na systemów z rodziny UNIX najczęściej mają kody źródłowe umieszczone w folderze `var/www/html/`. W związku z czym analizujemy na czym stoimy:
         - Link wygląda następująco:
             ```
             http://192.168.X.X/DVWA/vulnerablities/fi/?page=include.php
@@ -63,7 +63,7 @@
             ```
             ../../../../../../etc/passwd
             ```
-    3) Stworzonego **PAYLOADA** podstawiamy jako parametr linku:
+    3. Stworzonego **PAYLOADA** podstawiamy jako parametr linku:
         ```
         http://192.168.X.X/DVWA/vulnerabilities/fi/?page=../../../../../../etc/passwd
         ```
@@ -79,7 +79,7 @@
     <img src="pics/LFI7.png">
     
 
-    1) Na poziomie `medium` występuje już podstawowa walidacja inputu, którą rozpoznamy poprzez metodę prób i błędów. Zaczynamy testowanie od **PAYLOADA** z poprzedniego poziomu trudności:
+    1. Na poziomie `medium` występuje już podstawowa walidacja inputu, którą rozpoznamy poprzez metodę prób i błędów. Zaczynamy testowanie od **PAYLOADA** z poprzedniego poziomu trudności:
        
         <img src="pics/LFI9.png">
     
@@ -93,7 +93,7 @@
 
         <img src="pics/LFI10.png">
 
-    2) Możemy również spróbować podać bezpośrednią ścieżkę do pliku i zabczyć jaki będzie efekt:
+    2. Możemy również spróbować podać bezpośrednią ścieżkę do pliku i zabczyć jaki będzie efekt:
         ```
         /etc/passwd
         ```
@@ -103,7 +103,7 @@
         <img src="pics/LFI11.png">
 
 
-    3) Przybliżę jak wyglądała walidacja inputu na poziomie **medium**. W folderze `DVWA/vulnerabilities/fi/source/` znajduje się plik `medium.php`:
+    3. Przybliżę jak wyglądała walidacja inputu na poziomie **medium**. W folderze `DVWA/vulnerabilities/fi/source/` znajduje się plik `medium.php`:
         ```php
         <? php
         
@@ -119,7 +119,7 @@
         ```
         Kod odpowiadający za walidację inputu usuwa następujące ciągi znaków: `../` oraz `..\`. Pierwszy **PAYLOAD** wykorzystywał te funkcję, która zamieniłą nasz ciąg: `....//` na `../`. Z koleji drugi **PAYLOAD** nie posiadał ciągu, który mogłby zostać zmieniony: `/etc/passwd`.
 
-    4) Podobnie jak na poprzednim poziomie zachęcam do napisania **PAYLOADÓW** w celu podejrzenia zawartości pozostałych plików ze ściągawki.
+    4. Podobnie jak na poprzednim poziomie zachęcam do napisania **PAYLOADÓW** w celu podejrzenia zawartości pozostałych plików ze ściągawki.
 
 ## LFI- High
 
