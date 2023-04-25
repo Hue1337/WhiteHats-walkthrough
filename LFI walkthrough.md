@@ -5,39 +5,73 @@
 # Local File Inclusion- DVWA
 
 ## Jak połączyć się z DVWA?
-- 192.168.1.1
+1) Wpisujemy w przeglądarce link: http://192.168.13.198/DVWA/vulnerabilities/fi/?file=include.php.
+2) Upewniamy się, że poziom trudności jest ustawiony na `LOW`:
 
+    <img src="pics/LFI3.png">
+
+3) Jeżeli poziom trudności jest inny to zmieniamy go w zakładce `DVWA Security`:
+
+    <img src="pics/LFI4.png">
+
+4) Na koniec przechodzimy do zakładki `File Inclusion`:
+
+    <img src="pics/LFI5.png">
+
+## Cheatsheet- Local File Inclusion
+- Zanim przejdziemy do przeprowadzenia ataku warto wiedzieć, czego będziemy szukali na serwerze. Poniżej znajduję lista powszechnych plików systemowych, których możemy użyć podczas testowania aplikacji:
+
+    <img src="pics/thm1.png">
+
+    _Źródło: https://tryhackme.com_
 
 
 ## LFI- Low Security
 
-- W linku znajduje się parametr odpowiadający za ładowanie strony internetowej, którym będziemy się posługiwali przez całe walkthorugh:
+- Teraz możemy w pełni przejść do przeprowadzenia ataku `LFI`. W linku znajduje się parametr odpowiadający za ładowanie strony internetowej, którym będziemy się posługiwali przez całe walkthorugh:
 
     ```
-    192.168.X.X/dvwa/vulnerabilities/fi/?page=include.php
+    ?page=include.php
     ```
-<img src="pics/LFI1.png">
+    <img src="pics/LFI1.png">
 
 
-- Na poziomie **LOW** praktycznie nie ma żadnych zabezpieczeń, w związku z czym od razu możemy przejśc do ataku:
+- Na poziomie **LOW** praktycznie nie ma zabezpieczeń, w związku z czym od razu możemy przejść do zabwy:
 
-    1) Zmieniamy wartość parametru w URL z `index.php` w celu zobaczenia zachowania maszyny:
+    1) Zmieniamy wartość parametru w URL z `index.php` w celu zobaczenia zachowania maszyny (zobaczanie potncjalnych informacji o błędzie np.: `... include(var/www/html/DVWA/.../file.txt) ... not found`):
         ```
-        http://192.168.X.X/dvwa/vulnerablity/fi/?page=file.txt
+        http://192.168.X.X/DVWA/vulnerablity/fi/?page=file.txt
         ```
-    
-    2) Pojawiła nam się informacja zwrotna mówiąca o błędzie. Możemy z niej wyczytać w jakim folderze obecnie się znajdujemy. Ułatwia nam to przygotowanie payload'a, którym będzie wartość parametru `page`.
-    <img src="pics/LFI2.png">
-
-    3) W związku z tym, że znajdujemy się na ścieżce: `/var/www/dvwa/vulnerabilities/fi/index.php` jesteśmy w stanie policzyć, że ile folderów w zwyż powinniśmy przejśc, aby odczytać konkretne pliki. My się skupimy na pliku `/etc/passwd`:
+    2) Niestety aplikacja nie podaje informacji zwrotnych, w związku z czym albo korzystamy z wiedzy własnej, albo pytamy o pomoc **WUJKA GOOGLE**. Serwisy postawione na systemów z rodziny UNIX najczęściej mają kody źródłowe umieszczone w folderze `var/www/html/kod_zrodlowy.php`. W związku z czym analizujemy na czym stoimy:
+        - Link wygląda następująco:
+            ```
+            http://192.168.X.X/DVWA/vulnerablities/fi/?page=include.php
+            ```
+        - Po adresie `IP` znajduje się ścieżka do pliku (strony), na której się znajdujemy:
+            ```
+            /DVWA/vulnerabilities/fi/?page=include.php
+            ```
+        - Wcześniej dowiedzieliśmy się, że aplikacja znajduję się (najprawdopodbniej) na ścieżce `var/www/html/`. Łącząc fakty dostajemy ścieżkę:
+            ```
+            var/www/html/DVWA/vulnerabilities/fi/
+            ```
+        - Na podstawie tego widzimy, że musimy przejść 6 folderów do góry, aby dostać się do folderu głównego. Zaczynamy tworzyć **PAYLOAD** wykorzystując `Directory Traversal`:
+            ```
+            ../../../../../../
+            ```
+        - Uznajmy, że naszą flagą będzie plik `/etc/passwd`, który wzięliśmy ze ściągawki. Rozbudowujemy **PAYLAODA**:
+            ```
+            ../../../../../../etc/passwd
+            ```
+    3) Stworzonego **PAYLOADA** podstawiamy jako parametr linku:
+        ```
+        http://192.168.X.X/DVWA/vulnerabilities/fi/?page=../../../../../../etc/passwd
+        ```
+        Po wyświetleniu się zawartości pliku `etc/passwd` wiemy, że nasz payload zadziałał: 
         
-    4) W związku z informacją jaką posiadamy tworzymy payloada. Przejdziemy 5 folderów do góry, aby znaleźć się w podstawowym z którego przejdziemy kolejno do `/etc`, a następnie odczytamy plik `passwd`. Paylaod wygląda następująco:
-        ```sh
-        ../../../../../etc/passwd
-        ```
+        <img src="pics/LFI6.png">
 
-    5) Zmodyfikowany URL:
-        ```
-        http://192.168.X.X/dvwa/vulnerabilities/fi/?page=../../../../../etc/passwd
-        ```
+- Polecam spróbować stworzyć **PAYLOADY** w celu wyświetleniach zawartości innych plików z naszego **CHEATSHEETU**.
+
+    
     
