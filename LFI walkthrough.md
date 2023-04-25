@@ -128,11 +128,11 @@
     <img src="pics/LFI12.png">
 
 
-    1) Najpierw zobaczmy jak poradzą sobie **PAYLOADY** z poprzednich etapów. Dostajemy informację zwrotną niezależnie od payloada: 
+    1. Najpierw zobaczmy jak poradzą sobie **PAYLOADY** z poprzednich etapów. Dostajemy informację zwrotną niezależnie od payloada: 
 
         <img src="pics/LFI13.png">
 
-    2) Na tym etapie musimy zobaczyć jak zachowuje się walidacja inputu poprzez metodę prób i błędów. Po n-tym razie wpisałem `file.php` i otrzymałem taki rezultat:
+    2. Na tym etapie musimy zobaczyć jak zachowuje się walidacja inputu poprzez metodę prób i błędów. Po n-tym razie wpisałem `file.php` i otrzymałem taki rezultat:
 
         <img src="pics/LFI14.png">
 
@@ -142,7 +142,7 @@
 
         Z tego wynika, że input akceptuje input zaczynający się od słowa `file`. Na podstawie tej infotmacji możemy stworzyć próbnego **PAYLOADA**.
 
-    3) Jeżeli otwierałaś/eś pliki (np.: `*.pdf`, `*.html`) w przeglądarce to pewnie rozpoznasz ten `schemat URI`:
+    3. Jeżeli otwierałaś/eś pliki (np.: `*.pdf`, `*.html`) w przeglądarce to pewnie rozpoznasz ten `schemat URI`:
 
         <img src="pics/LFI16.png">
 
@@ -150,7 +150,7 @@
         ```
         file:///etc/passwd
         ```
-    4) Mamy nasz rezultat:
+    4. Mamy nasz rezultat:
 
         <img src="pics/LFI17.png">
 
