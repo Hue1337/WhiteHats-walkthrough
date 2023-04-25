@@ -1,3 +1,7 @@
+# File Inclusion- Walkthrough
+
+- Autor: [Mateusz Głuchowski](https://github.com/hue1337)
+
 # Local File Inclusion- DVWA
 
 ## Jak połączyć się z DVWA?
@@ -10,7 +14,7 @@
 - W linku znajduje się parametr odpowiadający za ładowanie strony internetowej, którym będziemy się posługiwali przez całe walkthorugh:
 
     ```
-    192.168.X.X/dvwa/vulnerabilities/fi/?page=index.php
+    192.168.X.X/dvwa/vulnerabilities/fi/?page=include.php
     ```
 <img src="pics/LFI1.png">
 
