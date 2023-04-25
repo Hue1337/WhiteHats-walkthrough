@@ -111,7 +111,8 @@
         $file = $_GET['page'];
 
         // Input validation
-        $file = str_replace( array( "http://", "https://" ),  "", $file );
+        ...
+        
         $file = str_replace( array( "../", "..\\" ),  "", $file );
 
         ?>
@@ -158,5 +159,48 @@
 
 # RFI- Remote File Inclusion
 
-- Zaczynamy od zmiany poziomu trudności.
+- Zaczynamy od zmiany poziomu trudności na `LOW`:
+    <img src="pics/LFI4.png">
 
+- Za flagę uznamy wyświetlenie GIF-a na naszej stronie.
+
+## RFI- Low
+
+1. Na poziomie `Low` podobnie jak w przypadku ataku `LFI` praktycznie nie ma zabezpieczeń, więc od razu możemy przejść do napisania najprostszego **PAYLOADA**, czyli wstawienie linku do pliku, który chcemy wyświetlić.
+
+2. Przygotowałem folder z kilkoma gotowymi **payloadami**, z których będziemy korzystali: https://github.com/Hue1337/WhiteHats-walkthrough/blob/main/payloads/
+
+3. Spróbujmy za parametr podstawić link do naszego gif-a:
+    ```
+    https://raw.githubusercontent.com/Hue1337/WhiteHats-walkthrough/main/payloads/thicc_gif.html
+    ```
+
+4. W prosty sposób udało nam się przeprowadzić skuteczy atak RFI:
+
+    <img src="pics/LFI18.png">
+
+
+## RFI- Medium
+- Zmieniamy poziom trudności:
+
+    <img src="pics/LFI7.png">
+
+    1. Zaczynamy tradycyjnie od spróbowania **PAYLOADA** z poprzedniego poziomu trudności:
+
+    <img src="pics/LFI19.png">
+
+    2. Jak widzimy nie przyniosło to rezultatów, w związku z czym powracamy do naszej metody prób i błędów. Po paru udało mi się odkryć, że elementem walidacji inputu jest człon `http://` oraz `https://`.
+
+    3. Postanowiłem przyjąć podobną taktykę jak na poziomie `medium LFI` i napisałem takiego payloada:
+
+        ```
+        hhttps://ttps://raw.githubusercontent.com/Hue1337/WhiteHats-walkthrough/main/payloads/thicc_gif.html    
+        ```
+
+        Efekt był natychmiastowy:
+
+        <img src="pics/LFI20.png">
+    
+## RFI- High 
+
+- Na poziomie `high` nie jest możliwe wykonanie akatku `RFI`, ponieważ walidacja pozwala tylko na podanie wartości parametru zaczynającego się od `file`, bądź będącego plikiem `include.php`.
