@@ -1,1 +1,1 @@
-<php shell_exec("ls");?>
+<?php shell_exec("ls");?>
