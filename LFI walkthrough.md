@@ -155,3 +155,4 @@
         <img src="pics/LFI17.png">
 
         Tak samo jak poprzednio zalecam spróbować z innymi plikami z chearsheetu.
+
