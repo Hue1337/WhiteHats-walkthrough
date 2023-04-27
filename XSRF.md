@@ -36,6 +36,8 @@
         http://192.168.X.X/DVWA/vulnerabilities/csrf/?password_new=haslo&password_conf=haslo&Change=Change
         ```
 
+        `Url` zawiera parametry `password_new` oraz `password_conf`, pod których wartości podstawiamy nowe hasło. Przykładowo `haslo`.
+
         A następnie z naszego **PAYLOADA**. Ustawiamy link w przekierowaniu na powyższy:
 
         <img src="pics/XSRF6.png"/>
@@ -52,5 +54,26 @@
         http://127.0.0.1:8000/paylaod1.html
         ```
 
-        Korzystamy z instrukcji i mamy zmienione hasło.
+        <img src="pics/XSRF7.png"/>
+
+        Korzystamy z *instrukcji* i mamy zmienione hasło:
         
+        <img src="pics/XSRF8.png"/>
+
+        Weryfikujemy nowe hasło (na nowo zmienione) i nazwe użytkownika:
+
+        <img src="pics/XSRF9.png"/>
+
+        Tym oto sposobem zdobywamy **flage**.
+
+## XSRF- Medium Security
+
+- Zaczynamy od zmiany poziomu trudności na `Medium`. Następnie powtarzamy kroki z poprzedniego poziomu trudności. Po przechwyceniu `requesta` widzimy takie informacje:
+
+    <img src="pics/XSRF10.png"/>
+
+    Szczególnie interesuje nas `linia 6`:
+    
+        ```
+        Referer: http://192.168.1.44/DVWA/vulnerabilities/csrf/
+        ```
